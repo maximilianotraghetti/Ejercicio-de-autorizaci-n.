@@ -27,23 +27,6 @@ export const todosPage = () => {
     window.location.pathname = "/home";
   });
 
-  const btnDelete = document.createElement("button");
-
-  btnDelete.classList.add(
-    "bg-red-500",
-    "text-white",
-    "p-2",
-    "rounded",
-    "hover:bg-red-600",
-    "mb-4"
-  );
-
-  btnDelete.textContent = "Delete";
-
-  btnDelete.addEventListener("click", () => {
-    window.location.pathname = "/Delete";
-  });
-
   const title = document.createElement("h1");
 
   title.classList.add("text-3xl", "font-bold", "mb-4");
@@ -133,6 +116,19 @@ export const todosPage = () => {
           "hover:bg-red-600"
         );
         td5.textContent = "Delete";
+        td5.addEventListener("click", () => {
+          fetch(`http://localhost:4000/todos/${todo.id}`, {
+            method: "DELETE",
+            credentials: "include",
+          }).then((id) => {
+            if (!id) {
+              alert("No se pudo eliminar la terea");
+              return;
+            }
+            alert("Tarea eliminada");
+            tr.remove();
+          });
+        });
 
         tr.appendChild(td1);
         tr.appendChild(td2);
