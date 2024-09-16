@@ -6,6 +6,22 @@ export const getAllTodosCtrl = (req, res) => {
   res.json({ todos });
 };
 
+export const editTodoCtrl = (req, res) => {
+  const { id } = req.params;
+  const { title, completed } = req.body;
+
+  const todo = database.todos.find((todo) => todo.id === +id);
+
+  if (!todo) {
+    return res.status(404).json({ message: "Todo no encontrado" });
+  }
+
+  todo.title = title || todo.title;
+  todo.completed = completed ?? todo.completed;
+
+  res.json({ message: "Todo actualizado", todo });
+};
+
 export const deleteTodoCtrl = (req, res) => {
   const { id } = req.params;
 
